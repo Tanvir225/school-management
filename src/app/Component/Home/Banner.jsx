@@ -1,5 +1,7 @@
 import Image from "next/image";
 import bannerImage from "./../../../assests/students.svg";
+import Link from "next/link";
+
 const Banner = () => {
   return (
     <section className="flex flex-col gap-10 justify-center items-center lg:flex-row ">
@@ -22,7 +24,11 @@ const Banner = () => {
           feedback. Access records, view marks, and communicate effortlessly.
         </p>
         <div className="">
-          <button className="btn btn-outline btn-primary  w-48 hover:btn-primary">Login</button>
+          <Link href="/picking">
+            <button className="btn btn-outline btn-primary  w-48 hover:btn-primary">
+              Login
+            </button>
+          </Link>
         </div>
       </div>
     </section>
@@ -30,5 +36,3 @@ const Banner = () => {
 };
 
 export default Banner;
-
-

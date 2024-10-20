@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const AdminLoginPage = () => {
   return (
     <div className="max-w-3xl bg-white p-6 my-2 rounded-lg shadow-md sm:px-8 sm:py-10 lg:px-12 lg:py-16 dark:bg-zinc-900 lg:h-[80vh] mx-auto">
@@ -46,9 +48,11 @@ const AdminLoginPage = () => {
             If you don&apos;t already have an account click the button below to
             create your account.
           </p>
-          <button className="mb-2 inline-flex h-10 w-full items-center justify-center rounded-md bg-zinc-800 px-4 py-2 text-sm font-medium uppercase text-white hover:bg-zinc-700">
-            Create Account
-          </button>
+          <Link href={"/signup"}>
+            <button className="mb-2 inline-flex h-10 w-full items-center justify-center rounded-md bg-zinc-800 px-4 py-2 text-sm font-medium uppercase text-white hover:bg-zinc-700">
+              Create Account
+            </button>
+          </Link>
           <p className="my-4 text-center">OR</p>
 
           <button className="flex h-10 w-full items-center justify-center gap-1 rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white">

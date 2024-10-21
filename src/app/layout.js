@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./Component/Navbar/Navbar";
 import Footer from "./Component/Footer/Footer";
+import AuthProvider from "@/providers/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,10 +16,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar></Navbar>
-        <div className="container mx-auto">{children}</div>
-        <Footer></Footer>
-        <Toaster></Toaster>
+        <AuthProvider>
+          <Navbar></Navbar>
+          <div className="container mx-auto">{children}</div>
+          <Footer></Footer>
+          <Toaster></Toaster>
+        </AuthProvider>
       </body>
     </html>
   );

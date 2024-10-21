@@ -1,8 +1,38 @@
-import React from "react";
+"use client";
+
+import toast from "react-hot-toast";
 
 const SignupPage = () => {
+  //handle signup form
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const newUser = {
+      name: event.target.name.value,
+      email: event.target.email.value,
+      password: event.target.password.value,
+      phone: event.target.phone.value,
+      image: event.target.image.value,
+      role:'user'
+    };
+
+    // console.log(newUser);
+
+    //save new user data into database
+    const response = await fetch("http://localhost:3000/signup/api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    });
+    if (response.status === 200) {
+      event.target.reset();
+      toast.success("user created");
+    }
+  };
+
   return (
-    <div className="max-w-2xl bg-white p-6 my-2 rounded-lg shadow-md sm:px-8 sm:py-10 lg:px-12 lg:py-16 dark:bg-zinc-900 lg:h-[80vh] mx-auto">
+    <div className="max-w-2xl bg-white p-6 my-2 rounded-lg shadow-md sm:px-8 sm:py-10 lg:px-12 lg:py-5 dark:bg-zinc-900 lg:h-[82vh] mx-auto">
       <div className="flex flex-col space-y-2">
         <h3 className="text-3xl font-bold tracking-tight">Sign Up</h3>
         <p className="text-sm text-zinc-500 dark:text-zinc-400">
@@ -10,7 +40,7 @@ const SignupPage = () => {
         </p>
       </div>
       <div>
-        <form className="space-y-6 mt-2">
+        <form className="space-y-5 mt-2" onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2 text-sm">
               <label
@@ -22,7 +52,8 @@ const SignupPage = () => {
               <input
                 className="flex h-10 w-full rounded-md border px-3 py-2  focus-visible:outline-none dark:border-zinc-700"
                 placeholder="Enter Full name"
-                name="full_name"
+                name="name"
+                required
                 type="text"
               />
             </div>
@@ -31,11 +62,11 @@ const SignupPage = () => {
                 className="text-sm font-medium leading-none text-zinc-700 dark:text-zinc-300"
                 htmlFor="phone"
               >
-                Phone 
+                Phone
               </label>
               <input
                 className="flex h-10 w-full rounded-md border px-3 py-2  focus-visible:outline-none dark:border-zinc-700"
-                id="phone"
+                required
                 placeholder="ex: 017******"
                 name="phone"
                 type="text"
@@ -51,9 +82,9 @@ const SignupPage = () => {
             </label>
             <input
               className="flex h-10 w-full rounded-md border px-3 py-2  focus-visible:outline-none dark:border-zinc-700"
-              id="email"
               placeholder="Enter your email"
               name="email"
+              required
               type="email"
             />
           </div>
@@ -66,10 +97,25 @@ const SignupPage = () => {
             </label>
             <input
               className="flex h-10 w-full rounded-md border px-3 py-2  focus-visible:outline-none dark:border-zinc-700"
-              id="password_"
+              required
               placeholder="password"
               name="password"
               type="password"
+            />
+          </div>
+          <div className="space-y-2 text-sm">
+            <label
+              className="text-sm font-medium leading-none text-zinc-700 dark:text-zinc-300"
+              htmlFor="Image"
+            >
+              Image URL <span className="text-red-800">(*jpg or png)</span>
+            </label>
+
+            <input
+              type="text"
+              name="image"
+              placeholder="Enter your image url"
+              className="input input-bordered  w-full h-10  focus-visible:outline-none"
             />
           </div>
           <button className="rounded-md bg-primary px-4 py-2 text-white transition-colors hover:bg-zinc-700 dark:bg-sky-700">

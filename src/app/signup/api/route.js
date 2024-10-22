@@ -15,23 +15,23 @@ export const POST = async (req) => {
         { status: 400 }
       );
     }
+
     const hashPassword = bcrypt.hashSync(newUser.password, 10);
     const result = await userCollection.insertOne({
       ...newUser,
       password: hashPassword,
     });
-
     return Response.json(
-      { message: "user save into databse" },
-      { status: 200 },
+      {
+        message: "user save into database",
+      },
+      {
+        status: 200,
+      },
       { result }
     );
   } catch (error) {
-    console.log(error);
-    return Response.json(
-      { message: "something went wrong" },
-      { status: 400 },
-      { error: error }
-    );
+    console.error("Signup error:", error);
+    return Response.json({ message: "Internal Server Error" }, { status: 500 });
   }
 };

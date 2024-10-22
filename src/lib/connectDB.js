@@ -19,7 +19,7 @@ export const connectDB = async () => {
       },
     });
 
-    db = client.connect("schoolManagement");
+    db = client.db("schoolManagement");
     return db;
   } catch (error) {
     console.log(error);

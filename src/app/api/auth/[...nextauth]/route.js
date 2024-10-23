@@ -19,39 +19,43 @@ export const authOptions = {
       },
 
       async authorize(credentials) {
-        const { email, password } = credentials;
+        const { email, password, studentClass, roll } = credentials;
         let user;
-
-        if (!email || !password) {
-          return null;
-        }
 
         const db = await connectDB();
 
+        //check for student login
+
+        if (studentClass && roll) {
+          user = await db.collection("students").findOne({
+            class: parseInt(studentClass),
+            roll: parseInt(roll),
+          });
+
+          if (!user) {
+            return null
+          }
+        }
+
+        // end student login
+
         // check for admin and teachers login
 
-        user = await db.collection("users").findOne({ email: email });
-        if (!user) {
-          user = await db.collection("teachers").findOne({ email: email });
+        if (email && password) {
+          user = await db.collection("users").findOne({ email: email });
           if (!user) {
+            user = await db.collection("teachers").findOne({ email: email });
+            if (!user) {
+              return null;
+            }
+          }
+          const decryptPassword = bcrypt.compareSync(password, user?.password); // true
+          if (!decryptPassword) {
             return null;
           }
         }
-        const decryptPassword = bcrypt.compareSync(password, user?.password); // true
-        if (!decryptPassword) {
-          return null;
-        }
 
         // end check admin and teacher login
-
-        //check for student login
-
-        if (credentials.studentClass && credentials.roll) {
-          user = await db.collection("students").findOne({
-            class: credentials.studentClass,
-            roll: parseInt(credentials.roll),
-          });
-        }
 
         if (!user) {
           return Response.json({ message: "user not found" });

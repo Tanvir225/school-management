@@ -16,8 +16,8 @@ const StudentLoginPage = () => {
 
     const result = await signIn('credentials',{
       redirect: false,
-      studentClass: studentClass,
-      roll: roll,
+      studentClass: parseInt(studentClass),
+      roll: parseInt(roll),
     })
 
     if (!result?.ok) {

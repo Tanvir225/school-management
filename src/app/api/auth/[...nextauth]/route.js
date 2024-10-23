@@ -1,6 +1,7 @@
 import { connectDB } from "@/lib/connectDB";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 
 export const authOptions = {
@@ -33,7 +34,7 @@ export const authOptions = {
           });
 
           if (!user) {
-            return null
+            return null;
           }
         }
 
@@ -64,9 +65,36 @@ export const authOptions = {
         return user;
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
   ],
 
   callbacks: {
+    async signIn({ account, user }) {
+      if (account.provider === "google" || account.provider === "github") {
+        // const { name, email, image } = user;
+        // console.log(name, email, image);
+        try {
+          const db = await connectDB();
+          const userCollection = db.collection("users");
+          const userExist = await userCollection.findOne({
+            email: user?.email,
+          });
+          if (!userExist) {
+            const res = await userCollection.insertOne(user);
+            return user;
+          } else {
+            return user;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        return user;
+      }
+    },
     async jwt({ token, user }) {
       if (user) token.role = user.role;
       return token;

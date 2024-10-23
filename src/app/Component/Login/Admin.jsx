@@ -31,6 +31,15 @@ const AdminLoginPage = () => {
     }
   };
 
+  //google login functionality
+
+  const handelMedia = async (provider) => {
+    // console.log(provider);
+    const response = await signIn(provider, {
+      redirect: false,
+    });
+  };
+
   return (
     <div className="max-w-3xl bg-white p-6 my-2 rounded-lg shadow-md sm:px-8 sm:py-10 lg:px-12 lg:py-16 dark:bg-zinc-900 lg:h-[80vh] mx-auto">
       <div className="flex flex-col justify-between space-x-0 sm:flex-row sm:space-x-12">
@@ -89,7 +98,7 @@ const AdminLoginPage = () => {
           </Link>
           <p className="my-4 text-center">OR</p>
 
-          <button className="flex h-10 w-full items-center justify-center gap-1 rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white">
+          <button onClick={() => handelMedia("google")} className="flex h-10 w-full items-center justify-center gap-1 rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"

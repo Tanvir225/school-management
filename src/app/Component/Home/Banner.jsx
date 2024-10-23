@@ -24,7 +24,7 @@ const Banner = () => {
           feedback. Access records, view marks, and communicate effortlessly.
         </p>
         <div className="">
-          <Link href="/picking">
+          <Link href="/auth">
             <button className="btn btn-outline btn-primary  w-48 hover:btn-primary">
               Login
             </button>

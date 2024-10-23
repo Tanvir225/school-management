@@ -2,8 +2,13 @@
 import Lottie from "lottie-react";
 import lodingLogo from "@/assests/loading.json";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
+
+  const session = useSession()
+  console.log(session);
+
   return (
     <section className="flex items-center justify-between container mx-auto border-green-100 border-b-2 p-1 ">
       <div>

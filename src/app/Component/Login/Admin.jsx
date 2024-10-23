@@ -1,6 +1,36 @@
+"use client";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 
+import { useState } from "react";
+import toast from "react-hot-toast";
+
 const AdminLoginPage = () => {
+  // login functionality
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    // console.log(email,password);
+
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: email,
+      password: password,
+    });
+
+    if (!result.ok) {
+      toast.error("Invalid email or password");
+      // event.target.reset()
+    }
+
+    if (result?.status === 200) {
+      toast.success("login successfully");
+      event.target.reset();
+    }
+  };
+
   return (
     <div className="max-w-3xl bg-white p-6 my-2 rounded-lg shadow-md sm:px-8 sm:py-10 lg:px-12 lg:py-16 dark:bg-zinc-900 lg:h-[80vh] mx-auto">
       <div className="flex flex-col justify-between space-x-0 sm:flex-row sm:space-x-12">
@@ -9,17 +39,21 @@ const AdminLoginPage = () => {
           <h2 className="mb-6 text-3xl font-semibold tracking-tight">
             Sign In
           </h2>
-          <form>
+
+          <form onSubmit={handleLogin}>
             <div className="mb-4 flex flex-col space-y-4">
               <input
                 className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:outline-none dark:border-zinc-700 focus:ring-1"
                 placeholder="email"
-                type="text"
+                type="email"
+                required
+                name="email"
               />
               <input
                 className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:outline-none dark:border-zinc-700 focus:ring-1"
                 placeholder="Password"
                 type="password"
+                name="password"
               />
             </div>
             <div className="mb-6 flex items-center space-x-2 accent-sky-600">

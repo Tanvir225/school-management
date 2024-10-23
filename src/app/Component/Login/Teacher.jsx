@@ -1,10 +1,37 @@
-import React from "react";
+"use client";
 
-const TeacherLoginPahe = () => {
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
+
+const TeacherLogInPage = () => {
+  // login fuctionality
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    // console.log(email, password);
+
+    const result = await signIn('credentials',{
+      redirect: false,
+      email: email,
+      password: password,
+    })
+
+    if (!result?.ok) {
+      toast.error("Invalid email or password")
+    }
+
+    if (result?.status === 200) {
+      toast.success('login successfully')
+      event.target.reset()
+    }
+  };
+
   return (
     <div className="flex justify-center items-center h-[85vh]">
       <div className="w-full max-w-lg rounded-lg bg-white p-5 sm:p-8 drop-shadow-lg dark:bg-zinc-900">
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleLogin}>
           <h1 className="text-3xl font-semibold tracking-tight">Sign In</h1>
           <div className="space-y-2">
             <label htmlFor="nui_email" className="block">
@@ -13,6 +40,8 @@ const TeacherLoginPahe = () => {
             <div className="relative">
               <input
                 type="email"
+                required
+                name="email"
                 placeholder="email"
                 className="h-10 w-full rounded bg-transparent pl-10 outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
               />
@@ -68,7 +97,7 @@ const TeacherLoginPahe = () => {
               </span>
             </div>
           </div>
-          <button className="rounded px-5 py-2 ring-1 bg-primary text-white ring-zinc-400 hover:bg-zinc-600/20 hover:text-black dark:ring-zinc-500">
+          <button type="submit" className="rounded px-5 py-2 ring-1 bg-primary text-white ring-zinc-400 hover:bg-zinc-600/20 hover:text-black dark:ring-zinc-500">
             Login
           </button>
         </form>
@@ -77,4 +106,4 @@ const TeacherLoginPahe = () => {
   );
 };
 
-export default TeacherLoginPahe;
+export default TeacherLogInPage;

@@ -1,12 +1,38 @@
 "use client";
 
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
+
 const StudentLoginPage = () => {
   const options = ["6", "7", "8", "9", "10"];
+
+  // handle Login functionality
+  const handleLogin = async(event)=>{
+    event.preventDefault();
+    const studentClass = event.target.studentClass.value;
+    const roll = event.target.roll.value;
+
+    // console.log(studentClass,roll);
+
+    const result = await signIn('credentials',{
+      redirect: false,
+      studentClass: studentClass,
+      roll: roll,
+    })
+
+    if (!result?.ok) {
+      toast.error("Invalid class or roll")
+    }
+
+    if (result?.status===200) {
+      toast.success("login successfully")
+    }
+  }
 
   return (
     <div className="flex justify-center items-center h-[85vh]">
       <div className="w-full max-w-lg rounded-lg bg-white p-5 sm:p-8 drop-shadow-lg dark:bg-zinc-900">
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleLogin}>
           <h1 className="text-3xl font-semibold tracking-tight">Sign In</h1>
           <div className="space-y-2">
             <label htmlFor="nui_email" className="block">
@@ -16,7 +42,8 @@ const StudentLoginPage = () => {
             {/* dropdown option */}
             <div className="relative">
               <select
-                name=""
+                name="studentClass"
+                required
                 className="h-10 w-full rounded bg-transparent pl-5  outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
               >
                 {options.map((option, index) => (

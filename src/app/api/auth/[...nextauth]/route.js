@@ -20,28 +20,58 @@ export const authOptions = {
 
       async authorize(credentials) {
         const { email, password } = credentials;
+        let user;
 
         if (!email || !password) {
           return null;
         }
 
         const db = await connectDB();
-        const user = await db.collection("users").findOne({ email });
+
+        // check for admin and teachers login
+
+        user = await db.collection("users").findOne({ email: email });
         if (!user) {
-          return null;
+          user = await db.collection("teachers").findOne({ email: email });
+          if (!user) {
+            return null;
+          }
         }
         const decryptPassword = bcrypt.compareSync(password, user?.password); // true
         if (!decryptPassword) {
           return null;
         }
+
+        // end check admin and teacher login
+
+        //check for student login
+
+        if (credentials.studentClass && credentials.roll) {
+          user = await db.collection("students").findOne({
+            class: credentials.studentClass,
+            roll: parseInt(credentials.roll),
+          });
+        }
+
+        if (!user) {
+          return Response.json({ message: "user not found" });
+        }
+
         return user;
       },
     }),
   ],
-  pages: {
-    signIn:"/picking/role"
+
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) token.role = user.role;
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.role = token.role;
+      return session;
+    },
   },
-  callbacks: {},
 };
 
 const handler = NextAuth(authOptions);

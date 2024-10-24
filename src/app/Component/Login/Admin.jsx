@@ -10,6 +10,7 @@ const AdminLoginPage = () => {
 
   const router = useRouter()
 
+
   // login functionality
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -32,7 +33,7 @@ const AdminLoginPage = () => {
     if (result?.status === 200) {
       toast.success("login successfully");
       event.target.reset();
-      router.push("/");
+      router.push("/dashboard");
     }
   };
 
@@ -41,10 +42,9 @@ const AdminLoginPage = () => {
   const handelMedia = async (provider) => {
     // console.log(provider);
     const response = await signIn(provider, {
-      redirect: false,
+      redirect: true,
+      callbackUrl: "/"
     });
-    router.push("/")
-  
   };
 
   return (

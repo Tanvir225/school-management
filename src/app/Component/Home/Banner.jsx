@@ -1,8 +1,13 @@
+"use client";
 import Image from "next/image";
 import bannerImage from "./../../../assests/students.svg";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const Banner = () => {
+  const session = useSession();
+
   return (
     <section className="flex flex-col gap-10 justify-center items-center lg:flex-row ">
       <div className="w-full h-full">
@@ -24,11 +29,19 @@ const Banner = () => {
           feedback. Access records, view marks, and communicate effortlessly.
         </p>
         <div className="">
-          <Link href="/auth">
-            <button className="btn btn-outline btn-primary  w-48 hover:btn-primary">
-              Login
-            </button>
-          </Link>
+          {session?.data ? (
+            
+              <button onClick={()=>signOut(toast.success("logout successfully"))} className="btn btn-outline btn-primary  w-48 hover:btn-primary">
+                Logout
+              </button>
+           
+          ) : (
+            <Link href="/auth">
+              <button className="btn btn-outline btn-primary  w-48 hover:btn-primary">
+                Login
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </section>

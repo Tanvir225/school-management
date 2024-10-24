@@ -2,8 +2,10 @@
 
 import logo from "@/assests/logo.svg";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import toast from "react-hot-toast";
+import LoginSkeleton from "../Utils/LoginSkeleton";
 
 const Navbar = () => {
   const session = useSession();
@@ -17,6 +19,10 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="">
+        {session.status === "loading" && (
+          <LoginSkeleton></LoginSkeleton>
+        )}
+
         {session.status === "unauthenticated" && (
           <button className="btn btn-sm btn-outline btn-primary  hover:btn-primary ">
             Demo
@@ -31,7 +37,7 @@ const Navbar = () => {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="w-10 rounded-full">
+                <div className="w-10 rounded-full skeleton">
                   <Image
                     src={session?.data?.user?.image}
                     alt={session?.data?.user?.name}
@@ -51,10 +57,18 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <a className="text-primary font-lg font-semibold">{session?.data?.user?.name}</a>
+                  <a className="text-primary font-lg font-semibold">
+                    {session?.data?.user?.name}
+                  </a>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  <a
+                    onClick={() =>
+                      signOut(toast.success("Logout Successfully"))
+                    }
+                  >
+                    Logout
+                  </a>
                 </li>
               </ul>
             </div>

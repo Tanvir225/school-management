@@ -31,7 +31,7 @@ const TeacherLogInPage = () => {
     if (result?.status === 200) {
       toast.success('login successfully')
       event.target.reset()
-      router.push('/')
+      router.push('/dashboard')
     }
   };
 

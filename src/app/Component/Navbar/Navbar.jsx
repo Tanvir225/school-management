@@ -1,29 +1,70 @@
 "use client";
-import Lottie from "lottie-react";
-import lodingLogo from "@/assests/loading.json";
+
+import logo from "@/assests/logo.svg";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const Navbar = () => {
-
-  const session = useSession()
+  const session = useSession();
   console.log(session);
 
   return (
     <section className="flex items-center justify-between container mx-auto border-green-100 border-b-2 p-1 ">
       <div>
-        <Link href="/">
-          <Lottie
-            animationData={lodingLogo}
-            loop={true}
-            className="w-11 h-11"
-          ></Lottie>
+        <Link href={"/"}>
+          <Image src={logo} alt="logo" width={40} height={40}></Image>
         </Link>
       </div>
-      <div>
-        <button className="btn btn-sm btn-outline btn-primary  hover:btn-primary ">
-          Demo
-        </button>
+      <div className="">
+        {session.status === "unauthenticated" && (
+          <button className="btn btn-sm btn-outline btn-primary  hover:btn-primary ">
+            Demo
+          </button>
+        )}
+
+        {session.status === "authenticated" && (
+          <div className="flex gap-2 items-center">
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full">
+                  <Image
+                    src={session?.data?.user?.image}
+                    alt={session?.data?.user?.name}
+                    width={45}
+                    height={45}
+                  ></Image>
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              >
+                <li>
+                  <a className="justify-between">
+                    Profile
+                    <span className="badge">New</span>
+                  </a>
+                </li>
+                <li>
+                  <a className="text-primary font-lg font-semibold">{session?.data?.user?.name}</a>
+                </li>
+                <li>
+                  <a>Logout</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <button className="btn btn-sm btn-outline text-primary hover:bg-primary">
+                Dashboard
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

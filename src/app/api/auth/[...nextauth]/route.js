@@ -70,12 +70,14 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  
 
   callbacks: {
     async signIn({ account, user }) {
       if (account.provider === "google" || account.provider === "github") {
         // const { name, email, image } = user;
         // console.log(name, email, image);
+        user.role = 'user'
         try {
           const db = await connectDB();
           const userCollection = db.collection("users");

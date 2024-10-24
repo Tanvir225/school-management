@@ -1,11 +1,15 @@
 "use client";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 const AdminLoginPage = () => {
+
+  const router = useRouter()
+
   // login functionality
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -28,6 +32,7 @@ const AdminLoginPage = () => {
     if (result?.status === 200) {
       toast.success("login successfully");
       event.target.reset();
+      router.push("/");
     }
   };
 
@@ -38,6 +43,8 @@ const AdminLoginPage = () => {
     const response = await signIn(provider, {
       redirect: false,
     });
+    router.push("/")
+  
   };
 
   return (

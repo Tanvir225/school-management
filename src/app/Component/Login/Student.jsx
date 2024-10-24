@@ -1,10 +1,13 @@
 "use client";
 
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 import toast from "react-hot-toast";
 
 const StudentLoginPage = () => {
   const options = ["6", "7", "8", "9", "10"];
+  const router = useRouter()
 
   // handle Login functionality
   const handleLogin = async(event)=>{
@@ -18,6 +21,7 @@ const StudentLoginPage = () => {
       redirect: false,
       studentClass: parseInt(studentClass),
       roll: parseInt(roll),
+     
     })
 
     if (!result?.ok) {
@@ -25,7 +29,8 @@ const StudentLoginPage = () => {
     }
 
     if (result?.status===200) {
-      toast.success("login successfully")
+      toast.success("login successfully");
+      router.push('/')
     }
   }
 

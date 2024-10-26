@@ -8,10 +8,8 @@ import toast from "react-hot-toast";
 import { HashLoader } from "react-spinners";
 
 const TeacherLogInPage = () => {
-
-  const router = useRouter()
-  const [loading,setLoading] = useState(false)
-
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   // login fuctionality
   const handleLogin = async (event) => {
@@ -20,24 +18,23 @@ const TeacherLogInPage = () => {
     const password = event.target.password.value;
 
     // console.log(email, password);
-    setLoading(true)
-    const result = await signIn('credentials',{
+    setLoading(true);
+    const result = await signIn("credentials", {
       redirect: false,
       email: email,
       password: password,
+    });
 
-    })
-
-    setLoading(false)
+    setLoading(false);
 
     if (!result?.ok) {
-      toast.error("Invalid email or password")
+      toast.error("Invalid email or password");
     }
 
     if (result?.status === 200) {
-      toast.success('login successfully')
-      event.target.reset()
-      router.push('/dashboard')
+      toast.success("login successfully");
+      event.target.reset();
+      router.push("/dashboard");
     }
   };
 
@@ -110,8 +107,20 @@ const TeacherLogInPage = () => {
               </span>
             </div>
           </div>
-          <button disabled={loading} type="submit" className="rounded w-32 px-5 py-2 ring-1 bg-primary text-white ring-zinc-400 hover:bg-zinc-600/20 hover:text-black dark:ring-zinc-500">
-            { loading ? <HashLoader color="white" size={20} loading={loading}></HashLoader> :"Login"}
+          <button
+            disabled={loading}
+            type="submit"
+            className="rounded w-32 px-5 py-2 ring-1 bg-primary text-white ring-zinc-400 hover:bg-zinc-600/20 hover:text-black dark:ring-zinc-500"
+          >
+            {loading ? (
+              <HashLoader
+                color="white"
+                size={20}
+                loading={loading}
+              ></HashLoader>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
       </div>

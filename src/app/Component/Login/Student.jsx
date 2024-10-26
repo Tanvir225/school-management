@@ -90,7 +90,7 @@ const StudentLoginPage = () => {
               </span>
             </div>
           </div>
-          <button disabled={loading}  className="rounded w-32 px-5 py-2 ring-1 bg-primary text-white ring-zinc-400 hover:bg-zinc-600/20 hover:text-black dark:ring-zinc-500">
+          <button disabled={loading}  className="rounded w-32 px-5 py-2 ring-1 bg-primary text-white ring-zinc-400 hover:bg-black hover:text-white dark:ring-zinc-500">
             {loading ? <HashLoader color="white" size={20} loading={loading}></HashLoader> :"Login"}
           </button>
         </form>

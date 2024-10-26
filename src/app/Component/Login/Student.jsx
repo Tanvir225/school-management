@@ -2,12 +2,15 @@
 
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import toast from "react-hot-toast";
+import { HashLoader } from "react-spinners";
 
 const StudentLoginPage = () => {
   const options = ["6", "7", "8", "9", "10"];
   const router = useRouter()
+  const [loading,setLoading] = useState(false)
 
   // handle Login functionality
   const handleLogin = async(event)=>{
@@ -16,13 +19,15 @@ const StudentLoginPage = () => {
     const roll = event.target.roll.value;
 
     // console.log(studentClass,roll);
-
+    setLoading(true)
     const result = await signIn('credentials',{
       redirect: false,
       studentClass: parseInt(studentClass),
       roll: parseInt(roll),
      
     })
+
+    setLoading(false)
 
     if (!result?.ok) {
       toast.error("Invalid class or roll")
@@ -85,8 +90,8 @@ const StudentLoginPage = () => {
               </span>
             </div>
           </div>
-          <button className="rounded px-5 py-2 ring-1 bg-primary text-white ring-zinc-400 hover:bg-zinc-600/20 hover:text-black dark:ring-zinc-500">
-            Login
+          <button disabled={loading}  className="rounded w-32 px-5 py-2 ring-1 bg-primary text-white ring-zinc-400 hover:bg-zinc-600/20 hover:text-black dark:ring-zinc-500">
+            {loading ? <HashLoader color="white" size={20} loading={loading}></HashLoader> :"Login"}
           </button>
         </form>
       </div>

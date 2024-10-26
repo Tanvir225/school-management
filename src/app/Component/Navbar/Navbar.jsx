@@ -7,8 +7,11 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import LoginSkeleton from "../Utils/LoginSkeleton";
 
+
+
 const Navbar = () => {
   const session = useSession();
+ 
   console.log(session);
 
   return (

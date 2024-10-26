@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { HashLoader } from "react-spinners";
 
 const AdminLoginPage = () => {
 
   const router = useRouter()
-
+  const [loading,setLoading] = useState(false)
 
   // login functionality
   const handleLogin = async (event) => {
@@ -18,13 +19,14 @@ const AdminLoginPage = () => {
     const password = event.target.password.value;
 
     // console.log(email,password);
-
+    setLoading(true)
     const result = await signIn("credentials", {
       redirect: false,
       email: email,
       password: password,
     });
 
+    setLoading(false)
     if (!result.ok) {
       toast.error("Invalid email or password");
       // event.target.reset()
@@ -81,8 +83,8 @@ const AdminLoginPage = () => {
                 Keep me signed in
               </label>
             </div>
-            <button className="inline-flex h-10 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium uppercase text-white hover:bg-zinc-700">
-              Login
+            <button disabled={loading} className="inline-flex h-10 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium uppercase text-white hover:bg-black">
+              { loading ? <HashLoader loading={loading} color="white" size={30}></HashLoader> :'Login'}
             </button>
           </form>
           <p className="mt-6 flex gap-1 text-sm">

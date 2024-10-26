@@ -1,8 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const SignupPage = () => {
+
+  const router = useRouter()
+
   //handle signup form
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,6 +32,7 @@ const SignupPage = () => {
     if (response.status === 200) {
       event.target.reset();
       toast.success("user created");
+      router.push("/auth/admin");
     }
   };
 

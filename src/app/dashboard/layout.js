@@ -1,11 +1,11 @@
 
 
-const layout = ({children}) => {
-    return (
-        <div>
-            {children}
-        </div>
-    );
+const layout = ({ children }) => {
+  return (
+    <div className="">
+        {children}
+    </div>
+  );
 };
 
 export default layout;

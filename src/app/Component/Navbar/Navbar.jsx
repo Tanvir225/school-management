@@ -7,11 +7,9 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import LoginSkeleton from "../Utils/LoginSkeleton";
 
-
-
 const Navbar = () => {
   const session = useSession();
- 
+
   console.log(session);
 
   return (
@@ -22,9 +20,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="">
-        {session.status === "loading" && (
-          <LoginSkeleton></LoginSkeleton>
-        )}
+        {session.status === "loading" && <LoginSkeleton></LoginSkeleton>}
 
         {session.status === "unauthenticated" && (
           <button className="btn btn-sm btn-outline btn-primary  hover:btn-primary ">
@@ -76,9 +72,11 @@ const Navbar = () => {
               </ul>
             </div>
             <div>
-              <button className="btn btn-sm btn-outline text-primary hover:bg-primary">
-                Dashboard
-              </button>
+              <Link href={"/dashboard"}>
+                <button className="btn btn-sm btn-outline text-primary hover:bg-primary">
+                  Dashboard
+                </button>
+              </Link>
             </div>
           </div>
         )}

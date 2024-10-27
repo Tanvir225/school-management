@@ -1,14 +1,36 @@
+'use client'
 const AddStudent = () => {
+  // handle addStudent function
+  const handleAddStudent = async(event) => {
+    event.preventDefault();
+    const newStudent = {
+      name: event.target.name.value,
+      phone: event.target.phone.value,
+      fatherName: event.target.fatherName.value,
+      motherName: event.target.motherName.value,
+      parentsNumber: event.target.parentsNumber.value,
+      studentClass: event.target.studentClass.value,
+      studentSection: event.target.studentSection.value,
+      roll: event.target.roll.value,
+      studentSession: event.target.studentSession.value,
+      studentImage: event.target.studentImage.value,
+    };
+
+    console.log(newStudent);
+  };
+
   return (
     <section className="w-full">
-      <h1 className="text-xl  font-bold text-primary my-5">Add New Student</h1>
+      <h1 className="text-xl font-bold text-primary my-5 border-b-2 border-primary">
+        Add New Student
+      </h1>
       {/* student form */}
-      <form className="flex items-center gap-5">
+      <form onSubmit={handleAddStudent} className="flex items-center gap-5 flex-col lg:flex-row">
         {/* side - 1 */}
-        <div className="w-full space-y-5 border-2 border-green-100 p-5 shadow-sm rounded-lg">
+        <div className="w-full space-y-5 border-2 border-green-500 p-5 shadow-sm rounded-lg">
           <div className="">
             <input
-              className="h-10 w-full rounded bg-transparent pl-2  outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
+              className="h-10 w-full rounded bg-transparent pl-2  outline-none ring-1 ring-primary dark:ring-gray-500"
               type="text"
               name="name"
               placeholder="student name"
@@ -17,7 +39,7 @@ const AddStudent = () => {
           </div>
           <div className="">
             <input
-              className="h-10 w-full rounded bg-transparent pl-2  outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
+              className="h-10 w-full rounded bg-transparent pl-2  outline-none ring-1 ring-primary dark:ring-gray-500"
               type="text"
               name="phone"
               placeholder="student number"
@@ -26,7 +48,7 @@ const AddStudent = () => {
           </div>
           <div className="">
             <input
-              className="h-10 w-full rounded bg-transparent pl-2  outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
+              className="h-10 w-full rounded bg-transparent pl-2  outline-none ring-1 ring-primary dark:ring-gray-500"
               type="text"
               name="fatherName"
               placeholder="father name"
@@ -35,7 +57,7 @@ const AddStudent = () => {
           </div>
           <div className="">
             <input
-              className="h-10 w-full rounded bg-transparent pl-2  outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
+              className="h-10 w-full rounded bg-transparent pl-2  outline-none ring-1 ring-primary dark:ring-gray-500"
               type="text"
               name="motherName"
               placeholder="mother name"
@@ -44,7 +66,7 @@ const AddStudent = () => {
           </div>
           <div className="">
             <input
-              className="h-10 w-full rounded bg-transparent pl-2  outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
+              className="h-10 w-full rounded bg-transparent pl-2  outline-none ring-1 ring-primary dark:ring-gray-500"
               type="text"
               name="parentsNumber"
               placeholder="parents number"
@@ -77,6 +99,16 @@ const AddStudent = () => {
             <option value="">B</option>
             <option value="">C</option>
           </select>
+
+          <div className="">
+            <input
+              className="h-10 w-full rounded bg-transparent pl-5  outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
+              type="number"
+              name="roll"
+              placeholder="student roll"
+              required
+            />
+          </div>
           <select
             name="studentSession"
             required
@@ -93,14 +125,16 @@ const AddStudent = () => {
             <input
               type="file"
               className=" w-full rounded bg-transparent p-2  outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
+              name="studentImage"
             />
           </div>
 
           <div>
-            <button className="btn w-full btn-outline btn-primary">Add student</button>
+            <button className="btn w-full btn-outline btn-primary">
+              Add student
+            </button>
           </div>
         </div>
-       
       </form>
     </section>
   );

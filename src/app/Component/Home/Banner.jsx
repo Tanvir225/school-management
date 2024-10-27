@@ -30,11 +30,14 @@ const Banner = () => {
         </p>
         <div className="">
           {session?.data ? (
-            
-              <button onClick={()=>signOut(toast.success("logout successfully"))} className="btn btn-outline btn-primary  w-48 hover:btn-primary">
-                Logout
-              </button>
-           
+            <button
+              onClick={async () =>
+                await signOut(toast.success("logout successfully"))
+              }
+              className="btn btn-outline btn-primary  w-48 hover:btn-primary"
+            >
+              Logout
+            </button>
           ) : (
             <Link href="/auth">
               <button className="btn btn-outline btn-primary  w-48 hover:btn-primary">

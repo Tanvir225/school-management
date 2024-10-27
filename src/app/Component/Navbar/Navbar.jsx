@@ -62,8 +62,8 @@ const Navbar = () => {
                 </li>
                 <li>
                   <a
-                    onClick={() =>
-                      signOut(toast.success("Logout Successfully"))
+                    onClick={async () =>
+                      await signOut(toast.success("Logout Successfully"))
                     }
                   >
                     Logout

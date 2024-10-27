@@ -1,10 +1,12 @@
+import MobileSidebar from "../Component/Dashboard/Sidebar/MobileSidebar";
 import Sidebar from "../Component/Dashboard/Sidebar/Sidebar";
 
 const layout = ({ children }) => {
   return (
-    <div className="container mx-auto flex items-center gap-2">
+    <div className="container mx-auto flex lg:items-center  flex-col lg:flex-row">
       <Sidebar></Sidebar>
-      <div className="ml-64 p-5 h-[85vh] overflow-y-auto w-full">{children}</div>
+      <MobileSidebar></MobileSidebar>
+      <div className="lg:ml-64 p-5 lg:h-[85vh] h-[80vh] overflow-y-auto w-full">{children}</div>
     </div>
   );
 };

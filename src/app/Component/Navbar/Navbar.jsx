@@ -73,7 +73,7 @@ const Navbar = () => {
             </div>
             <div>
               <Link href={"/dashboard"}>
-                <button className="btn btn-sm btn-outline text-primary hover:bg-primary">
+                <button className="btn btn-sm btn-outline text-primary hover:bg-primary hover:text-white">
                   Dashboard
                 </button>
               </Link>

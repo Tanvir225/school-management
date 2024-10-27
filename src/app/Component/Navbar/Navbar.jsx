@@ -56,7 +56,7 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <a className="text-primary font-lg font-semibold">
+                  <a className="text-primary font-semibold">
                     {session?.data?.user?.name}
                   </a>
                 </li>

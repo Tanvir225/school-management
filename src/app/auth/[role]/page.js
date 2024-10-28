@@ -1,9 +1,14 @@
+import getClasses from "@/api/getClasses";
+import getSections from "@/api/getSections";
 import AdminLoginPage from "@/app/Component/Login/Admin";
 import StudentLoginPage from "@/app/Component/Login/Student";
 import TeacherLoginPahe from "@/app/Component/Login/Teacher";
 import React from "react";
 
-const LoginPage = ({ params }) => {
+const LoginPage = async({ params }) => {
+  const classes = await getClasses()
+  const sections = await getSections()
+
   return (
     <div>
       {params?.role === "admin" ? (
@@ -11,7 +16,7 @@ const LoginPage = ({ params }) => {
       ) : params?.role === "teacher" ? (
         <TeacherLoginPahe></TeacherLoginPahe>
       ) : (
-        <StudentLoginPage></StudentLoginPage>
+        <StudentLoginPage classes={classes} sections={sections} ></StudentLoginPage>
       )}
     </div>
   );

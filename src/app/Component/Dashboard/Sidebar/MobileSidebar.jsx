@@ -4,6 +4,7 @@ import { useState } from "react";
 import Drawer from "react-modern-drawer";
 //import styles 👇
 import "react-modern-drawer/dist/index.css";
+import { MdMenuBook } from "react-icons/md";
 
 const MobileSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,9 +13,15 @@ const MobileSidebar = () => {
   };
   return (
     <div className="block lg:hidden px-5 py-2">
-     
-        <button onClick={toggleDrawer} className={`btn btn-sm w-28 btn-outline ${isOpen ? 'hover:bg-primary hover:text-white':'bg-red-700 text-white'}`}>{isOpen ? 'close' : 'menu'}</button>
-   
+      <button
+        onClick={toggleDrawer}
+        className={`btn btn-sm w-28 btn-outline text-primary ${
+          isOpen ? "bg-red-700 text-white" : ""
+        }`}
+      >
+        {isOpen ? "close" : <MdMenuBook size={30}></MdMenuBook>}
+      </button>
+
       <Drawer
         open={isOpen}
         onClose={toggleDrawer}

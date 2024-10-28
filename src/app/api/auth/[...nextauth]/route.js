@@ -20,17 +20,18 @@ export const authOptions = {
       },
 
       async authorize(credentials) {
-        const { email, password, studentClass, roll } = credentials;
+        const { email, password, studentClass, roll, studentSection } =
+          credentials;
         let user;
-
         const db = await connectDB();
 
         //check for student login
 
-        if (studentClass && roll) {
+        if (studentClass && roll && studentSection) {
           user = await db.collection("students").findOne({
-            class: parseInt(studentClass),
+            studentClass: parseInt(studentClass),
             roll: parseInt(roll),
+            studentSection: studentSection,
           });
 
           if (!user) {
@@ -70,14 +71,13 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  
 
   callbacks: {
     async signIn({ account, user }) {
       if (account.provider === "google" || account.provider === "github") {
         // const { name, email, image } = user;
         // console.log(name, email, image);
-        user.role = 'user'
+        user.role = "user";
         try {
           const db = await connectDB();
           const userCollection = db.collection("users");

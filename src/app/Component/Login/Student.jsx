@@ -7,37 +7,39 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { HashLoader } from "react-spinners";
 
-const StudentLoginPage = () => {
-  const options = ["6", "7", "8", "9", "10"];
-  const router = useRouter()
-  const [loading,setLoading] = useState(false)
+const StudentLoginPage = ({ classes, sections }) => {
+
+
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   // handle Login functionality
-  const handleLogin = async(event)=>{
+  const handleLogin = async (event) => {
     event.preventDefault();
     const studentClass = event.target.studentClass.value;
     const roll = event.target.roll.value;
+    const studentSection = event.target.studentSection.value;
 
-    // console.log(studentClass,roll);
-    setLoading(true)
-    const result = await signIn('credentials',{
+    // console.log(studentClass,roll,studentSection);
+    setLoading(true);
+    const result = await signIn("credentials", {
       redirect: false,
       studentClass: parseInt(studentClass),
       roll: parseInt(roll),
-     
-    })
+      studentSection: studentSection,
+    });
 
-    setLoading(false)
+    setLoading(false);
 
     if (!result?.ok) {
-      toast.error("Invalid class or roll")
+      toast.error("Invalid class or roll");
     }
 
-    if (result?.status===200) {
+    if (result?.status === 200) {
       toast.success("login successfully");
-      router.push('/')
+      router.push("/");
     }
-  }
+  };
 
   return (
     <div className="flex justify-center items-center h-[85vh]">
@@ -56,9 +58,30 @@ const StudentLoginPage = () => {
                 required
                 className="h-10 w-full rounded bg-transparent pl-5  outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
               >
-                {options.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
+                {classes.map((option) => (
+                  <option key={option._id} value={option?.classNumber}>
+                    {option?.classNumber}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="nui_email" className="block">
+              Section
+            </label>
+
+            {/* dropdown option */}
+            <div className="relative">
+              <select
+                name="studentSection"
+                required
+                className="h-10 w-full rounded bg-transparent pl-5  outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
+              >
+                {sections.map((section) => (
+                  <option key={section._id} value={section?.section}>
+                    {section?.section}
                   </option>
                 ))}
               </select>
@@ -90,8 +113,19 @@ const StudentLoginPage = () => {
               </span>
             </div>
           </div>
-          <button disabled={loading}  className="rounded w-32 px-5 py-2 ring-1 bg-primary text-white ring-zinc-400 hover:bg-black hover:text-white dark:ring-zinc-500">
-            {loading ? <HashLoader color="white" size={20} loading={loading}></HashLoader> :"Login"}
+          <button
+            disabled={loading}
+            className="rounded w-32 px-5 py-2 ring-1 bg-primary text-white ring-zinc-400 hover:bg-black hover:text-white dark:ring-zinc-500"
+          >
+            {loading ? (
+              <HashLoader
+                color="white"
+                size={20}
+                loading={loading}
+              ></HashLoader>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
       </div>

@@ -6,11 +6,28 @@ import toast from "react-hot-toast";
 const AddStudent = ({ classes, sections, sessions }) => {
   const router = useRouter();
 
+  // Function to get the current date in Bangladesh Time
+  function getBangladeshDate() {
+    const now = new Date();
+    const bangladeshOffset = 6 * 60; // Offset in minutes (UTC+6)
+    const localTime = new Date(now.getTime() + bangladeshOffset * 60 * 1000);
+
+    // Extract the date part (YYYY-MM-DD)
+    const year = localTime.getUTCFullYear();
+    const month = String(localTime.getUTCMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+    const day = String(localTime.getUTCDate()).padStart(2, "0");
+
+    return `${day}-${month}-${year}`; // Format: YYYY-MM-DD
+  }
+
+  // console.log(getBangladeshDate());
+
   // handle addStudent function
   const handleAddStudent = async (event) => {
     event.preventDefault();
     const newStudent = {
       name: event.target.name.value,
+      gender: event.target.gender.value,
       phone: event.target.phone.value,
       fatherName: event.target.fatherName.value,
       motherName: event.target.motherName.value,
@@ -18,8 +35,9 @@ const AddStudent = ({ classes, sections, sessions }) => {
       studentClass: parseInt(event.target.studentClass.value),
       studentSection: event.target.studentSection.value,
       roll: parseInt(event.target.roll.value),
-      studentSession: event.target.studentSession.value,
+      studentSession: parseInt(event.target.studentSession.value),
       studentImage: event.target.studentImage.value,
+      admissionDate: getBangladeshDate(),
     };
 
     // console.log(newStudent);
@@ -54,7 +72,7 @@ const AddStudent = ({ classes, sections, sessions }) => {
         className="flex items-center gap-5 flex-col lg:flex-row"
       >
         {/* side - 1 */}
-        <div className="w-full space-y-5 border-2 border-green-500 p-5 shadow-sm rounded-lg">
+        <div className="w-full space-y-3 border-2 border-green-500 p-5 shadow-sm rounded-lg">
           <h1 className="font-semibold text-lg border-b-2 border-dashed border-green-200">
             Personal Information
           </h1>
@@ -66,6 +84,40 @@ const AddStudent = ({ classes, sections, sessions }) => {
               placeholder="student name"
               required
             />
+          </div>
+          <div className="space-y-1">
+            <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+              <input
+                id="bordered-radio-2"
+                type="radio"
+                value="male"
+                name="gender"
+                required
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="bordered-radio-2"
+                className="w-full py-1  ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Male
+              </label>
+            </div>
+            <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+              <input
+                id="bordered-radio-2"
+                type="radio"
+                value="female"
+                name="gender"
+                required
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="bordered-radio-2"
+                className="w-full py-1  ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Female
+              </label>
+            </div>
           </div>
           <div className="">
             <input

@@ -1,6 +1,6 @@
 const getClasses = async () => {
   const response = await fetch(
-    "http://localhost:3000/dashboard/students/api/getClasses",
+    `${process.env.NEXT_PUBLIC_URL}/dashboard/students/api/getClasses`,
     {
       cache: "no-store",
     }

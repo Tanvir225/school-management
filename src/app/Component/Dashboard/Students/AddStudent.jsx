@@ -36,13 +36,13 @@ const AddStudent = ({ classes, sections, sessions }) => {
       studentSection: event.target.studentSection.value,
       roll: parseInt(event.target.roll.value),
       studentSession: parseInt(event.target.studentSession.value),
-      studentImage: event.target.studentImage.value,
+      image: event.target.image.value,
       admissionDate: getBangladeshDate(),
     };
 
     // console.log(newStudent);
     const response = await fetch(
-      "http://localhost:3000/dashboard/students/add-student/api",
+      `${process.env.NEXT_PUBLIC_URL}/dashboard/students/add-student/api`,
       {
         method: "POST",
         headers: {
@@ -210,7 +210,7 @@ const AddStudent = ({ classes, sections, sessions }) => {
             <input
               type="text"
               className="h-10 w-full rounded bg-transparent pl-5  outline-none ring-1 ring-primary dark:ring-gray-500"
-              name="studentImage"
+              name="image"
               placeholder="student image link"
             />
           </div>

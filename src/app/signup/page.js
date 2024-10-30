@@ -22,7 +22,7 @@ const SignupPage = () => {
     // console.log(newUser);
 
     //save new user data into database
-    const response = await fetch("http://localhost:3000/signup/api", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/signup/api`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

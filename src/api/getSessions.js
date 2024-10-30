@@ -1,6 +1,6 @@
 const getSessions = async () => {
   const response = await fetch(
-    "http://localhost:3000/dashboard/students/api/getSessions",
+    `${process.env.NEXT_PUBLIC_URL}/dashboard/students/api/getSessions`,
     {
       cache: "no-store",
     }

@@ -2,6 +2,7 @@ import getClasses from "@/api/getClasses";
 import getSections from "@/api/getSections";
 import getSessions from "@/api/getSessions";
 import FilterStudents from "@/app/Component/Dashboard/Students/FilterStudents";
+import StudentGrid from "@/app/Component/Dashboard/Students/StudentGrid";
 import Link from "next/link";
 import { FaPlus } from "react-icons/fa";
 
@@ -23,10 +24,10 @@ const studentPage = async ({ searchParams }) => {
     }).toString();
 
     const response = await fetch(
-      `http://localhost:3000/dashboard/students/api/getStudents?${queryString}`
+      `${process.env.NEXT_PUBLIC_URL}/dashboard/students/api/getStudents?${queryString}`
     );
     students = await response.json();
-    console.log(students);
+    // console.log(students);
   }
 
   return (
@@ -57,7 +58,7 @@ const studentPage = async ({ searchParams }) => {
 
       {/* student show as a grid  */}
       <section className="w-full border-2 border-green-100 shadow-sm p-2 rounded-lg">
-        {students.length > 0 ? "" : <p>Please Filter to View Students</p>}
+        {students.length > 0 ? <StudentGrid students={students}></StudentGrid> : <p>Please Filter to View Students</p>}
       </section>
     </div>
   );

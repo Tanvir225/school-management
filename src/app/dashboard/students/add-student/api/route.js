@@ -1,8 +1,19 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { connectDB } from "@/lib/connectDB";
+import { getServerSession } from "next-auth";
 
 export const POST = async (req) => {
   const newStudent = await req.json();
   //   console.log(newStudent);
+
+  const session = await getServerSession(authOptions);
+  // console.log(session,7);
+
+  // Redirect if the user is not an admin or teacher
+  if (!session || !["admin", "teacher"].includes(session.user.role)) {
+    return Response.json({ message: "forbidden access" }, { status: 403 });
+  }
+
   try {
     const db = await connectDB();
     const newStudentCollection = await db.collection("students");

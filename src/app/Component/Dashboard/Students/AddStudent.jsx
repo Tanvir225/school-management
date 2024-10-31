@@ -38,6 +38,7 @@ const AddStudent = ({ classes, sections, sessions }) => {
       studentSession: parseInt(event.target.studentSession.value),
       image: event.target.image.value,
       admissionDate: getBangladeshDate(),
+      role:"student"
     };
 
     // console.log(newStudent);

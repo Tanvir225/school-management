@@ -58,7 +58,7 @@ const StudentLoginPage = ({ classes, sections }) => {
                 required
                 className="h-10 w-full rounded bg-transparent pl-5  outline-none ring-1 ring-zinc-400 dark:ring-gray-500"
               >
-                {classes.map((option) => (
+                {classes && classes.map((option) => (
                   <option key={option._id} value={option?.classNumber}>
                     {option?.classNumber}
                   </option>

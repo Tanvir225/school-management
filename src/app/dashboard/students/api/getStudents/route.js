@@ -1,4 +1,7 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { connectDB } from "@/lib/connectDB";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 export const GET = async (req) => {
   // Extract query parameters using `new URL`
@@ -15,7 +18,10 @@ export const GET = async (req) => {
     ...(studentSession && { studentSession: parseInt(studentSession) }),
   };
 
+ 
+
   try {
+    
     const db = await connectDB();
     const studentCollection = await db.collection("students");
     const result = await studentCollection

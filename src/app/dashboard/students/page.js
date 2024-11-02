@@ -32,13 +32,22 @@ const studentPage = async ({ searchParams }) => {
       studentSession,
     }).toString();
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/dashboard/students/api/getStudents?${queryString}`
-    );
-    students = await response.json();
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/dashboard/students/api/getStudents?${queryString}`
+      );
 
-    // return students
-    // console.log(students);
+      if (!response.ok) {
+        console.error("Failed to fetch students:", await response.text());
+        throw new Error("Failed to fetch students.");
+      }
+      students = await response.json();
+
+      // return students
+      // console.log(students);
+    } catch (error) {
+      console.error("Error fetching students:", error);
+    }
   }
 
   return (

@@ -18,10 +18,17 @@ export const GET = async (req) => {
     ...(studentSession && { studentSession: parseInt(studentSession) }),
   };
 
- 
+  const session = await getServerSession(authOptions);
+
+  // Return a 403 Forbidden status if session is not valid or user role is "student"
+  if (session?.user?.role === "student" || session?.user?.role === "user") {
+    return new Response(JSON.stringify({ message: "Forbidden Access" }), {
+      status: 403,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 
   try {
-    
     const db = await connectDB();
     const studentCollection = await db.collection("students");
     const result = await studentCollection

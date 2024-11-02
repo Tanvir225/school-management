@@ -1,10 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 const AddStudent = ({ classes, sections, sessions }) => {
   const router = useRouter();
+  const [error,setError] = useState("")
 
   // Function to get the current date in Bangladesh Time
   function getBangladeshDate() {
@@ -32,14 +34,21 @@ const AddStudent = ({ classes, sections, sessions }) => {
       fatherName: event.target.fatherName.value,
       motherName: event.target.motherName.value,
       parentsNumber: event.target.parentsNumber.value,
+      personalInfo: event.target.personalInfo.value,
+      regNo: event.target.regNo.value,
       studentClass: parseInt(event.target.studentClass.value),
       studentSection: event.target.studentSection.value,
       roll: parseInt(event.target.roll.value),
       studentSession: parseInt(event.target.studentSession.value),
       image: event.target.image.value,
       admissionDate: getBangladeshDate(),
-      role:"student"
+      role: "student",
     };
+
+    if (newStudent?.regNo <10 || newStudent?.regNo>17) {
+      setError("Please provide a valid digit Of your nid / birth cert")
+      return
+    }
 
     // console.log(newStudent);
     const response = await fetch(
@@ -64,8 +73,10 @@ const AddStudent = ({ classes, sections, sessions }) => {
 
   return (
     <section className="w-full">
-      <h1 className="text-xl font-bold text-primary my-4 border-b-2 border-primary">
-        Add New Student
+      <h1 className={`text-xl font-bold text-primary my-4 border-b-2 border-primary ${error && "text-red-700"}`}>
+        {
+          error ? error : "Add New Student"
+        }
       </h1>
       {/* student form */}
       <form
@@ -153,6 +164,49 @@ const AddStudent = ({ classes, sections, sessions }) => {
               type="text"
               name="parentsNumber"
               placeholder="parents number"
+              required
+            />
+          </div>
+          <div className="space-y-1">
+            <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+              <input
+                id="bordered-radio-2"
+                type="radio"
+                value="nid"
+                name="personalInfo"
+                required
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="bordered-radio-2"
+                className="w-full py-1  ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                NID
+              </label>
+            </div>
+            <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+              <input
+                id="bordered-radio-2"
+                type="radio"
+                value="birth Certificate"
+                name="personalInfo"
+                required
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="bordered-radio-2"
+                className="w-full py-1  ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Birth Certificate
+              </label>
+            </div>
+          </div>
+          <div className="">
+            <input
+              className="h-10 w-full rounded bg-transparent pl-2  outline-none ring-1 ring-primary dark:ring-gray-500"
+              type="text"
+              name="regNo"
+              placeholder="nid / birth Cert no."
               required
             />
           </div>
